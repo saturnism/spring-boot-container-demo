@@ -61,7 +61,31 @@ The configuration is stored in `docker-compose.yml`
 
 Kubernetes
 ----------
-TBD
+The following instructions assume that you already have Kubernetes cluster up and running.  If not, check out [Google Container Engine](https://cloud.google.com/container-engine/) to get started quickly.
+
+Change directory to where all the Kubernetes configuration files are:
+
+    cd src/test/kubernetes
+
+Deploy Redis master pod:
+
+    kubectl create -f redis-master-pod.yaml
+    
+Create a Redis master service:
+
+    kubectl create -f redis-master-service.yaml
+    
+Deploy Spring Boot Demo replication controller:
+
+    kubectl create -f spring-boot-demo-controller.yaml
+    
+Create a service:
+
+    kubectl create -f spring-boot-demo-service.yaml
+    
+If you are on Google Container Engine, or Kubernetes deployment that supports external services, you can create an external service:
+
+    kubectl create -f spring-boot-demo-external-service.yaml
 
 Google App Engine
 -----------------
