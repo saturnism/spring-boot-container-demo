@@ -75,6 +75,13 @@
         </configuration>
       </plugin>
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>com.google.example.Application</mainClass>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>com.google.appengine</groupId>
         <artifactId>gcloud-maven-plugin</artifactId>
         <version>${gcloud.version}</version>

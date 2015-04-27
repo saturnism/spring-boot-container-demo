@@ -32,6 +32,12 @@ Build Docker container:
 
 Running
 =======
+Java
+----
+Pretty straight forward:
+
+    mvn exec:java
+
 Docker
 ------
 

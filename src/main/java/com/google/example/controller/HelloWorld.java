@@ -21,6 +21,8 @@ import java.net.UnknownHostException;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -29,15 +31,15 @@ import org.springframework.web.context.request.RequestContextHolder;
 public class HelloWorld implements Serializable {
     private Integer count = 0;
 
-    @RequestMapping("/")
-    public Response index() {
+    @RequestMapping(value="/helloworld", method=RequestMethod.GET, produces="application/json")
+    public @ResponseBody HelloWorldResponse helloworld() {
         String hostname;
         try {
             hostname = InetAddress.getLocalHost().getHostName();
         } catch (UnknownHostException e) {
             hostname = "unknown";
         }
-        Response response = new Response();
+        HelloWorldResponse response = new HelloWorldResponse();
         response.hostname = hostname;
         response.sessionId = RequestContextHolder.currentRequestAttributes().getSessionId();
         response.count = count++;
@@ -50,9 +52,28 @@ public class HelloWorld implements Serializable {
         return "1.0";
     }
 
-    class Response {
+    public static class HelloWorldResponse {
         String hostname;
         String sessionId;
         int count;
+
+        public String getHostname() {
+            return hostname;
+        }
+        public void setHostname(String hostname) {
+            this.hostname = hostname;
+        }
+        public String getSessionId() {
+            return sessionId;
+        }
+        public void setSessionId(String sessionId) {
+            this.sessionId = sessionId;
+        }
+        public int getCount() {
+            return count;
+        }
+        public void setCount(int count) {
+            this.count = count;
+        }
     }
 }
