@@ -95,7 +95,17 @@ To run locally:
 
     mvn gcloud:run
     
-To deploy into Google App Engine:
+To deploy into Google App Engine, you'll first need to create a Redis server.  You can deploy Redis easily by using [Click to Deploy](https://cloud.google.com/solutions/redis/).
+
+Once deployed, update `src/main/resources/application-gae.properties` file, and set:
+
+    spring.redis.host=YOUR_REDIS_MASTER_INSTANCE_NAME
+    
+Build the Docker image, so that it generates Dockerfile
+
+    mvn docker:build
+
+Finally, deploy the application using `gcloud` plugin:
 
     mvn gcloud:deploy -Dgcloud.project=YOUR_PROJECT_ID
     

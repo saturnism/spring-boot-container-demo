@@ -17,16 +17,17 @@
 kind: Pod
 apiVersion: v1beta1
 id: redis-master
+labels:
+  name: redis
+  role: master
+  visualize: "true"
 desiredState:
-  labels:
-    name: redis
-    role: master
   manifest:
     version: v1beta1
     id: redis-master
     containers:
       - name: redis-master
-        image: dockerfile/redis
+        image: redis
         ports:
           - name: redis-server
             containerPort: 6379

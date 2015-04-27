@@ -16,12 +16,13 @@
 
 kind: Service
 apiVersion: v1beta1
-id: redis-master-service
+id: redis-master
 port: 6379
 containerPort: redis-server
 selector:
-  - name: redis
-    role: master
+  name: redis
+  role: master
 labels:
-  - name: redis
-    role: master
+  name: redis
+  role: master
+  visualize: "true"

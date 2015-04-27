@@ -14,11 +14,13 @@
 # limitations under the License.
 ###############################################################################
 
-web:
-  image: spring-boot-demo
-  links:
-   - redis
-  ports:
-   - "8080:8080"
-redis:
-  image: redis
+id: spring-boot-demo-service
+kind: Service
+apiVersion: v1beta1
+port: 80
+containerPort: 8080
+sessionAffinity: none
+selector:
+  name: spring-boot-demo
+labels:
+  visualize: "true"

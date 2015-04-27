@@ -14,11 +14,14 @@
 # limitations under the License.
 ###############################################################################
 
-id: spring-boot-demo-external-service
+id: spring-boot-demo-e
 kind: Service
 apiVersion: v1beta1
 port: 80
 containerPort: 8080
 createExternalLoadBalancer: true
 selector:
-  name: spring-boot-demo-pod
+  name: spring-boot-demo
+labels:
+  name: spring-boot-demo-service
+  visualize: "true"

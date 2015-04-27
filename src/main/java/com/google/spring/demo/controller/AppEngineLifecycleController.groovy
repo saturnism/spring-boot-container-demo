@@ -13,20 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.example.controller;
+package com.google.spring.demo.controller
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AppEngineLifecycleHooks {
+class AppEngineLifecycleController {
     @RequestMapping("/_ah/start")
-    public String start() {
+    def start() {
         return "OK";
     }
 
     @RequestMapping("/_ah/health")
-    public String health() {
+    def health() {
         return "OK";
     }
 }

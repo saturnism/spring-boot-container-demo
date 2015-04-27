@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2015 Google Inc. All Rights Reserved. Licensed under the Apache 
-  License, Version 2.0 (the "License"); you may not use this file except in 
-  compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 
-  Unless required by applicable law or agreed to in writing, software distributed 
-  under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
-  OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
-  the specific language governing permissions and limitations under the License. -->
+<!--
+  Copyright 2015 Google Inc. All Rights Reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -16,6 +24,7 @@
 
   <properties>
     <gcloud.version>1.9.18-SNAPSHOT</gcloud.version>
+    <main.class>com.google.spring.demo.Application</main.class>
   </properties>
 
   <parent>
@@ -25,6 +34,10 @@
   </parent>
 
   <dependencies>
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy</artifactId>
+    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
@@ -37,6 +50,24 @@
       <groupId>org.springframework.session</groupId>
       <artifactId>spring-session-data-redis</artifactId>
       <version>1.0.0.RELEASE</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-social-linkedin</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>2.10.4</version>
     </dependency>
   </dependencies>
 
@@ -51,15 +82,12 @@
         <artifactId>docker-maven-plugin</artifactId>
         <version>0.1.1</version>
         <configuration>
-          <imageName>${project.artifactId}</imageName>
           <baseImage>java:8</baseImage>
-          <entryPoint>["java",
-            "-Djava.security.egd=file:/dev/./urandom", "-jar",
-            "/app/${project.build.finalName}.jar"]</entryPoint>
+          <imageName>${project.artifactId}</imageName>
+          <entryPoint>["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/${project.build.finalName}.jar"]</entryPoint>
           <exposes>
             <expose>8080</expose>
           </exposes>
-          <imageName>${project.artifactId}</imageName>
           <resources>
             <resource>
               <targetPath>/app/</targetPath>
@@ -75,10 +103,34 @@
         </configuration>
       </plugin>
       <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <compilerId>groovy-eclipse-compiler</compilerId>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-eclipse-compiler</artifactId>
+            <version>2.9.1-01</version>
+          </dependency>
+          <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-eclipse-batch</artifactId>
+            <version>2.3.7-01</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.groovy</groupId>
+        <artifactId>groovy-eclipse-compiler</artifactId>
+        <version>2.9.1-01</version>
+        <extensions>true</extensions>
+      </plugin>
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <configuration>
-          <mainClass>com.google.example.Application</mainClass>
+          <mainClass>${main.class}</mainClass>
         </configuration>
       </plugin>
       <plugin>

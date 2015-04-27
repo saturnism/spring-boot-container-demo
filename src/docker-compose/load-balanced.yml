@@ -13,32 +13,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-kind: ReplicationController
-apiVersion: v1beta1
-id: spring-boot-demo-controller
-labels:
-  name: spring-boot-demo
-  visualize: "true"
-desiredState:
-  replicas: 2
-  replicaSelector:
-    name: spring-boot-demo
-  podTemplate:
-    labels:
-      name: spring-boot-demo
-      uses: redis-master
-      visualize: "true"
-    desiredState:
-      manifest:
-        version: v1beta1
-        id: spring-boot-demo
-        labels:
-          name: spring-boot-demo-pod
-          visualize: "true"
-        containers:
-         - name: spring-boot-demo
-           image: gcr.io/wise-coyote-827/spring-boot-demo
-           imagePullPolicy: PullAlways
-           ports:
-            - name: http
-              containerPort: 8080
+
+lb:
+  image: jwilder/nginx-proxy
+  ports:
+    - "80:80"
+  volumes:
+    - "/var/run/docker.sock:/tmp/docker.sock"
+app1:
+  image: spring-boot-demo
+  links:
+    - redis
+  environment:
+    VIRTUAL_HOST: docker-machine.dev
+app2:
+  image: spring-boot-demo
+  links:
+    - redis
+  environment:
+    VIRTUAL_HOST: docker-machine.dev
+redis:
+  image: redis
