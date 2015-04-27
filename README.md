@@ -16,7 +16,7 @@
 
 Spring Boot Docker Example
 ==========================
-This is an example Spring Boot "Hello World" micro-service application that can be containerized and subsequently execute in Docker, Kubernetes, and Google App Engine!
+This is an example Spring Boot "Hello World" micro-service application that can be containerized and subsequently executed in Docker, Kubernetes, and Google App Engine!
 
 This is not an official Google product.
 
@@ -40,7 +40,6 @@ Pretty straight forward:
 
 Docker
 ------
-
 Without Redis for session:
 
     docker run -ti spring-boot-demo
